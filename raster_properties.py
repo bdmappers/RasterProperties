@@ -23,6 +23,7 @@
 from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication
 from PyQt4.QtGui import *
 from qgis.core import *
+
 # Initialize Qt resources from file resources.py
 import resources
 # Import the code for the dialog
@@ -69,11 +70,10 @@ class RasterProperties:
         self.toolbar = self.iface.addToolBar(u'RasterProperties')
         self.toolbar.setObjectName(u'RasterProperties')
 
-        self.dlg.cb_layer.clear()
-        self.dlg.cb_layer.currentIndexChanged.connect(self.update_properties)
         self.layerIndex = 0
         self.layer = None
         self.dlg.cb_layer.setCurrentIndex(self.layerIndex)
+        self.dlg.cb_layer.currentIndexChanged.connect(self.update_properties)
 
     # noinspection PyMethodMayBeStatic
     def tr(self, message):
@@ -187,15 +187,15 @@ class RasterProperties:
 
 
     def update_properties(self, index):
-        #do stuff here
-        print 'updating' + str(index)
-        self.layerIndex = index
-        self.layer = QgsMapLayerRegistry.instance().mapLayersByName( self.dlg.cb_layer.currentText() )[0]
-        self.set_extent()
-        self.set_statistics()
+
+        if index > -1:
+            self.layerIndex = index
+            self.layer = QgsMapLayerRegistry.instance().mapLayersByName( self.dlg.cb_layer.currentText() )[0]
+            self.set_extent()
+            self.set_statistics()
 
     def set_extent(self):
-        #do stuff here
+
         e = self.layer.extent()
         self.dlg.le_top.setText(str(e.yMaximum()))
         self.dlg.le_bottom.setText(str(e.yMinimum()))
@@ -223,6 +223,8 @@ class RasterProperties:
 
     def run(self):
         """Run method that performs all the real work"""
+        self.dlg.cb_layer.clear()
+
         layers = self.iface.legendInterface().layers()
         layer_list = []
         for layer in layers:
@@ -231,13 +233,7 @@ class RasterProperties:
                 layer_list.append(layer.name())
 
         self.dlg.cb_layer.addItems(layer_list)
-
         # show the dialog
         self.dlg.show()
         # Run the dialog event loop
         result = self.dlg.exec_()
-        # See if OK was pressed
-        if result:
-            # Do something useful here - delete the line containing pass and
-            # substitute with your code.
-            pass
