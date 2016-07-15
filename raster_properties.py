@@ -21,7 +21,7 @@
  ***************************************************************************/
 """
 from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication
-from PyQt4.QtGui import QAction, QIcon, QLabel
+from PyQt4.QtGui import *
 from qgis.core import *
 # Initialize Qt resources from file resources.py
 import resources
@@ -192,6 +192,7 @@ class RasterProperties:
         self.layerIndex = index
         self.layer = QgsMapLayerRegistry.instance().mapLayersByName( self.dlg.cb_layer.currentText() )[0]
         self.set_extent()
+        self.set_statistics()
 
     def set_extent(self):
         #do stuff here
@@ -200,6 +201,25 @@ class RasterProperties:
         self.dlg.le_bottom.setText(str(e.yMinimum()))
         self.dlg.le_left.setText(str(e.xMinimum()))
         self.dlg.le_right.setText(str(e.xMaximum()))
+
+    #def set_information(self):
+        #do stuff here
+
+    def set_statistics(self):
+        doc = QTextDocument()
+        cursor = QTextCursor(doc)
+        provider = self.layer.dataProvider()
+        for band in range(1, self.layer.bandCount()+1):
+            stats = provider.bandStatistics(band, QgsRasterBandStats.All, self.layer.extent(), 0)
+            bandStr = "<b>Band:\t" + str(band) + "</b> <font size='10'>"
+            cursor.insertHtml(bandStr)
+            cursor.insertText('\n\tMin:\t' + str(round(stats.minimumValue,2)) + '\n'
+                              '\tMax:\t' + str(round(stats.maximumValue,2)) + '\n'
+                              '\tMean:\t' + str(round(stats.mean,2)) + '\n'
+                              '\tStd. Dev:\t' + str(round(stats.stdDev,2)) + '\n'
+                              '\tSum:\t' + str(round(stats.sum,2)) + '\n')
+
+        self.dlg.textBrowser.setDocument(doc)
 
     def run(self):
         """Run method that performs all the real work"""
