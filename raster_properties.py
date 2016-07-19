@@ -227,10 +227,9 @@ class RasterProperties:
         for band in range(1, self.layer.bandCount()+1):
             stats = provider.bandStatistics(band, QgsRasterBandStats.All, self.layer.extent(), 0)
             bandName = self.layer.bandName(band)
-            frmt.setFontPointSize(11.0)
+            frmt.setFontPointSize(10.0)
             frmt.setFontWeight(99)
             cursor.insertText('Band: ' + str(band), frmt)
-            frmt.setFontPointSize(10.0)
             frmt.setFontWeight(1)
             cursor.insertText('\n      Name:\t' + str(bandName) + '\n'
                               '      Min:\t' + str(round(stats.minimumValue,2)) + '\n'

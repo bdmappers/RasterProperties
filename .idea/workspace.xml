@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="50d0e39e-f45c-4e6e-b937-857c8789fdb6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/raster_properties_dialog_base.ui" afterPath="$PROJECT_DIR$/raster_properties_dialog_base.ui" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/raster_properties.py" afterPath="$PROJECT_DIR$/raster_properties.py" />
     </list>
     <ignored path="RasterProperties.iws" />
@@ -42,8 +39,8 @@
       <file leaf-file-name="raster_properties.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/raster_properties.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5925926">
-              <caret line="230" column="34" selection-start-line="230" selection-start-column="34" selection-end-line="230" selection-end-column="34" />
+            <state vertical-scroll-proportion="0.6111111">
+              <caret line="231" column="57" selection-start-line="231" selection-start-column="57" selection-end-line="231" selection-end-column="57" />
               <folding>
                 <element signature="e#1169#1244#0" expanded="true" />
               </folding>
@@ -236,8 +233,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/raster_properties.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5925926">
-          <caret line="230" column="34" selection-start-line="230" selection-start-column="34" selection-end-line="230" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.6111111">
+          <caret line="231" column="57" selection-start-line="231" selection-start-column="57" selection-end-line="231" selection-end-column="57" />
           <folding>
             <element signature="e#1169#1244#0" expanded="true" />
           </folding>
