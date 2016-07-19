@@ -23,12 +23,13 @@
 from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication
 from PyQt4.QtGui import *
 from qgis.core import *
+from osgeo import gdal
 
 # Initialize Qt resources from file resources.py
 import resources
 # Import the code for the dialog
 from raster_properties_dialog import RasterPropertiesDialog
-import os.path
+import os
 
 
 class RasterProperties:
@@ -187,37 +188,56 @@ class RasterProperties:
 
 
     def update_properties(self, index):
-
         if index > -1:
             self.layerIndex = index
             self.layer = QgsMapLayerRegistry.instance().mapLayersByName( self.dlg.cb_layer.currentText() )[0]
+            self.set_information()
             self.set_extent()
             self.set_statistics()
 
     def set_extent(self):
-
         e = self.layer.extent()
         self.dlg.le_top.setText(str(e.yMaximum()))
         self.dlg.le_bottom.setText(str(e.yMinimum()))
         self.dlg.le_left.setText(str(e.xMinimum()))
         self.dlg.le_right.setText(str(e.xMaximum()))
+        self.dlg.le_width.setText(str((e.xMaximum() - e.xMinimum())/self.layer.width()))
+        self.dlg.le_height.setText(str((e.yMaximum() - e.yMinimum())/self.layer.height()))
 
-    #def set_information(self):
+    def set_information(self):
         #do stuff here
+        fmttypes = {0:'Unknown', 1:'Byte', 2:'UInt16', 3:'Int16', 4:'UInt32', 5:'Int32', 6:'Float32', 7:'Float64', 8:'Float64', 9:'CInt16', 10:'CInt32', 11:'CFloat32', 12:'CFloat64'}
+        filepath = self.layer.dataProvider().dataSourceUri()
+        (folder, file) = os.path.split(filepath)
+        self.dlg.le_folder.setText(folder)
+        self.dlg.le_file.setText(file)
+        self.dlg.le_rows.setText(str(self.layer.width()))
+        self.dlg.le_cols.setText(str(self.layer.height()))
+        ds = gdal.Open(filepath)
+        band = ds.GetRasterBand(1)
+        self.dlg.le_data.setText(str(fmttypes[band.DataType]))
 
     def set_statistics(self):
         doc = QTextDocument()
         cursor = QTextCursor(doc)
         provider = self.layer.dataProvider()
+        frmt = QTextCharFormat()
+        frmt.setFontPointSize(10.0)
+
         for band in range(1, self.layer.bandCount()+1):
             stats = provider.bandStatistics(band, QgsRasterBandStats.All, self.layer.extent(), 0)
-            bandStr = "<b>Band:\t" + str(band) + "</b> <font size='10'>"
-            cursor.insertHtml(bandStr)
-            cursor.insertText('\n\tMin:\t' + str(round(stats.minimumValue,2)) + '\n'
-                              '\tMax:\t' + str(round(stats.maximumValue,2)) + '\n'
-                              '\tMean:\t' + str(round(stats.mean,2)) + '\n'
-                              '\tStd. Dev:\t' + str(round(stats.stdDev,2)) + '\n'
-                              '\tSum:\t' + str(round(stats.sum,2)) + '\n')
+            bandName = self.layer.bandName(band)
+            frmt.setFontPointSize(11.0)
+            frmt.setFontWeight(99)
+            cursor.insertText('Band: ' + str(band), frmt)
+            frmt.setFontPointSize(10.0)
+            frmt.setFontWeight(1)
+            cursor.insertText('\n      Name:\t' + str(bandName) + '\n'
+                              '      Min:\t' + str(round(stats.minimumValue,2)) + '\n'
+                              '      Max:\t' + str(round(stats.maximumValue,2)) + '\n'
+                              '      Mean:\t' + str(round(stats.mean,2)) + '\n'
+                              '      Std. Dev:\t' + str(round(stats.stdDev,2)) + '\n'
+                              '      Sum:\t' + str(round(stats.sum,2)) + '\n', frmt)
 
         self.dlg.textBrowser.setDocument(doc)
 
