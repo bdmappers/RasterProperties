@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>335</width>
-    <height>648</height>
+    <height>550</height>
    </rect>
   </property>
   <property name="maximumSize">
    <size>
     <width>335</width>
-    <height>1500</height>
+    <height>1100</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -72,7 +72,7 @@
      <property name="title">
       <string>Information</string>
      </property>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>8</x>
@@ -210,7 +210,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>8</x>
@@ -264,7 +264,7 @@
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>175</height>
+       <height>140</height>
       </size>
      </property>
      <property name="maximumSize">
@@ -286,7 +286,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>70</y>
+        <y>50</y>
         <width>121</width>
         <height>41</height>
        </rect>
@@ -326,7 +326,7 @@
       <property name="geometry">
        <rect>
         <x>100</x>
-        <y>20</y>
+        <y>9</y>
         <width>121</width>
         <height>41</height>
        </rect>
@@ -366,7 +366,7 @@
       <property name="geometry">
        <rect>
         <x>182</x>
-        <y>70</y>
+        <y>50</y>
         <width>121</width>
         <height>41</height>
        </rect>
@@ -406,7 +406,7 @@
       <property name="geometry">
        <rect>
         <x>100</x>
-        <y>120</y>
+        <y>90</y>
         <width>121</width>
         <height>41</height>
        </rect>
@@ -442,12 +442,6 @@
        </item>
       </layout>
      </widget>
-     <zorder>layoutWidget</zorder>
-     <zorder>layoutWidget</zorder>
-     <zorder>layoutWidget</zorder>
-     <zorder>layoutWidget</zorder>
-     <zorder>groupBox_2</zorder>
-     <zorder>groupBox_2</zorder>
     </widget>
    </item>
    <item>

@@ -71,9 +71,12 @@ class RasterProperties:
         self.toolbar = self.iface.addToolBar(u'RasterProperties')
         self.toolbar.setObjectName(u'RasterProperties')
 
+        #set default values for layer index and layer
         self.layerIndex = 0
         self.layer = None
+        #set the current index of the combo box
         self.dlg.cb_layer.setCurrentIndex(self.layerIndex)
+        #when value in the combo box is changed update the properties in the form
         self.dlg.cb_layer.currentIndexChanged.connect(self.update_properties)
 
     # noinspection PyMethodMayBeStatic
@@ -186,15 +189,19 @@ class RasterProperties:
         # remove the toolbar
         del self.toolbar
 
-
+    #populate form with properties from the selected raster
     def update_properties(self, index):
         if index > -1:
+            #set index of the layer
             self.layerIndex = index
+            #set the layer for which to display properties
             self.layer = QgsMapLayerRegistry.instance().mapLayersByName( self.dlg.cb_layer.currentText() )[0]
+            #set all values for the layer
             self.set_information()
             self.set_extent()
             self.set_statistics()
 
+    #set values for layer extent and cell width and height
     def set_extent(self):
         e = self.layer.extent()
         self.dlg.le_top.setText(str(e.yMaximum()))
@@ -204,8 +211,9 @@ class RasterProperties:
         self.dlg.le_width.setText(str((e.xMaximum() - e.xMinimum())/self.layer.width()))
         self.dlg.le_height.setText(str((e.yMaximum() - e.yMinimum())/self.layer.height()))
 
+    #set values in information group box
     def set_information(self):
-        #do stuff here
+        #Lookup a string for GDAL data type value
         fmttypes = {0:'Unknown', 1:'Byte', 2:'UInt16', 3:'Int16', 4:'UInt32', 5:'Int32', 6:'Float32', 7:'Float64', 8:'Float64', 9:'CInt16', 10:'CInt32', 11:'CFloat32', 12:'CFloat64'}
         filepath = self.layer.dataProvider().dataSourceUri()
         (folder, file) = os.path.split(filepath)
@@ -213,11 +221,14 @@ class RasterProperties:
         self.dlg.le_file.setText(file)
         self.dlg.le_rows.setText(str(self.layer.width()))
         self.dlg.le_cols.setText(str(self.layer.height()))
+        #Retrieve data type from GDAL raster band
         ds = gdal.Open(filepath)
         band = ds.GetRasterBand(1)
         self.dlg.le_data.setText(str(fmttypes[band.DataType]))
 
+    #set values in band statistics group box
     def set_statistics(self):
+        #use QTextDocument and QTextCursor to format text
         doc = QTextDocument()
         cursor = QTextCursor(doc)
         provider = self.layer.dataProvider()
@@ -242,15 +253,17 @@ class RasterProperties:
 
     def run(self):
         """Run method that performs all the real work"""
+        #clear the combo box showing layers, or when reopened in the same session there will be duplicate entries
         self.dlg.cb_layer.clear()
 
         layers = self.iface.legendInterface().layers()
         layer_list = []
         for layer in layers:
-            if QgsMapLayer.RasterLayer == layer.type():   # vectorLayer
-
+            #add all raster layers to the layer list
+            if QgsMapLayer.RasterLayer == layer.type():
                 layer_list.append(layer.name())
 
+        #add layer list to combo box
         self.dlg.cb_layer.addItems(layer_list)
         # show the dialog
         self.dlg.show()
