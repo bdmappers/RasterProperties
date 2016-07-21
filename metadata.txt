@@ -16,7 +16,6 @@ email=khafen74@gmail.com
 
 about=This plugin displays the basic properties of a raster layer. Specifically, raster extent, verical and horizonal cell resolution, and basic statistics are displayed.
 
-homepage=https://khafen74.github.io/RasterProperties/
 tracker=https://github.com/khafen74/RasterProperties/issues
 repository=https://github.com/khafen74/RasterProperties
 # End of mandatory metadata
@@ -27,9 +26,9 @@ repository=https://github.com/khafen74/RasterProperties
 # changelog=
 
 # Tags are comma separated with spaces allowed
-tags=statistics,raster 
+tags=statistics, raster 
 
-homepage=khafen74.github.io
+homepage=https://khafen74.github.io/RasterProperties
 category=Raster
 icon=icon.png
 # experimental flag
