@@ -1,0 +1,6 @@
+{
+  "name": "Rasterproperties",
+  "tagline": "QGIS python plugin that displays the basic properties of a raster layer",
+  "body": "# RasterProperties\r\nQGIS python plugin that displays the basic properties of a raster layer.\r\n\r\n##Usage\r\nThis plugin is simple to use. Simply clone, download, or extract this repository into your QGIS plugins directory. Next open QGIS and load any raster layers you desire. Then open the plugin, it is availbe in the Raster menu, or on the toolbar. Once the plugin is open you will be able to view the properties for any raster layer that is loaded in the table of contents.\r\n\r\n![](https://goo.gl/TUJaAq)\r\n\r\n*Access from the raster menu.*\r\n\r\n![](https://goo.gl/fycsQ4)\r\n\r\n*Access from the tool bar.*\r\n\r\n![](https://goo.gl/JeQO0a)\r\n\r\n*Select raster for which to display properties.*\r\n\r\n![](https://goo.gl/r4UsME)\r\n\r\n*Full view of the plugin dialog.*\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
